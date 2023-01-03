@@ -1,5 +1,5 @@
 (() => {
-    const allCheckboxes = document.querySelectorAll("input");
+    const badhabox = document.querySelectorAll("input");
     const checkboxWrapper = document.querySelector(".checkboxes");
     const scoreBoard = document.querySelector(".score");
     const currentScore = document.querySelector(".current");
@@ -61,7 +61,7 @@
     }
   
     function reset() {
-      allCheckboxes.forEach((checkbox, index) => {
+      badhabox.forEach((checkbox, index) => {
         checkbox.style.transform = "none";
         if (index !== 0) {
           checkbox.disabled = true;
@@ -97,17 +97,17 @@
     }
   
     document.body.addEventListener("click", () => {
-      if (currentIndex === 0 || currentIndex === allCheckboxes.length) return;
+      if (currentIndex === 0 || currentIndex === badhabox.length) return;
   
-      allCheckboxes[currentIndex].disabled = true;
-      allCheckboxes[currentIndex - 1].checked = false;
-      allCheckboxes[currentIndex - 1].disabled = false;
+      badhabox[currentIndex].disabled = true;
+      badhabox[currentIndex - 1].checked = false;
+      badhabox[currentIndex - 1].disabled = false;
       currentIndex--;
       currentScore.innerText = currentIndex.toString().padStart(3, "0");
       checkboxWrapper.style.transform = `translateX(${-20 * currentIndex}px)`;
     });
   
-    allCheckboxes.forEach((checkbox, index) => {
+    badhabox.forEach((checkbox, index) => {
       checkbox.addEventListener("click", (event) => {
         if (!startTime) {
           startTimer();
@@ -126,7 +126,7 @@
           currentIndex++;
           currentScore.innerText = currentIndex.toString().padStart(3, "0");
   
-          if (currentIndex === allCheckboxes.length) {
+          if (currentIndex === badhabox.length) {
             flagPiece.style.fill = "#00c800";
             cancelAnimationFrame(animationFrame);
             scoreBoard.classList.remove("show");
@@ -137,14 +137,14 @@
             return;
           }
   
-          allCheckboxes[currentIndex].disabled = false;
+          badhabox[currentIndex].disabled = false;
           checkboxWrapper.style.transform = `translateX(${-20 * currentIndex}px)`;
   
-          allCheckboxes[
+          badhabox[
             currentIndex
           ].style.transform = `translateY(${randomPosOrNeg(5 + currentIndex)}px)`;
-        } else if (currentIndex === allCheckboxes.length) {
-          if (currentIndex === allCheckboxes.length) {
+        } else if (currentIndex === badhabox.length) {
+          if (currentIndex === badhabox.length) {
             event.stopPropagation();
             event.preventDefault();
           }
