@@ -1,23 +1,23 @@
 (() => {
     const badhabox = document.querySelectorAll("input");
-    const checkboxWrapper = document.querySelector(".checkboxes");
-    const scoreBoard = document.querySelector(".score");
-    const currentScore = document.querySelector(".current");
+    const wrapcheck = document.querySelector(".checkboxes");
+    const scorecard = document.querySelector(".score");
+    const chaluscore = document.querySelector(".current");
     const tips = document.querySelector(".tips");
     const timer = document.querySelector(".timer");
     const flagPiece = document.querySelector(".flagPiece");
     const finalTime = document.querySelector(".finalTime");
     const resetButton = document.querySelector(".resetButton");
-    const endBoard = document.querySelector(".end");
+    const opend = document.querySelector(".end");
     const boostWords = [
-      "Speed!",
-      "Nice!",
-      "Fast!",
-      "Power!",
-      "Great!",
-      "Awesome!",
-      "Amazing!",
-      "Super!",
+      "હા મોજ હા!",
+      "જલસો બકા!",
+      "હા સવાજ!",
+      "મોજે દરિયા!",
+      "હાકલા!",
+      "બવ સારૂ!",
+      "ખમાં!",
+      "હા ભાઈ હા!",
     ];
   
     resetButton.addEventListener("click", reset);
@@ -29,7 +29,7 @@
     let animationFrame;
     let startTime;
   
-    let currentIndex = 0;
+    let myindex = 0;
   
     function startTimer() {
       startTime = Date.now();
@@ -37,15 +37,15 @@
     }
   
     function msToTime(duration) {
-      var milliseconds = parseInt((duration % 1000) / 10)
+      var ms = parseInt((duration % 1000) / 10)
           .toString()
           .padStart(2, "0"),
-        seconds = Math.floor((duration / 1000) % 60),
-        minutes = Math.floor((duration / (1000 * 60)) % 60),
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-      seconds = seconds < 10 ? "0" + seconds : seconds;
+        sec = Math.floor((duration / 1000) % 60),
+        min = Math.floor((duration / (1000 * 60)) % 60),
+        min = min < 10 ? "0" + min : min;
+      sec = sec < 10 ? "0" + sec : sec;
   
-      return minutes + ":" + seconds + ":" + milliseconds;
+      return min + ":" + sec + ":" + ms;
     }
   
     function tick() {
@@ -69,15 +69,15 @@
         checkbox.checked = false;
       });
   
-      currentIndex = 0;
-      checkboxWrapper.style.transform = `translateX(${-20 * currentIndex}px)`;
-      currentScore.innerHTML = 0;
+      myindex = 0;
+      wrapcheck.style.transform = `translateX(${-20 * myindex}px)`;
+      chaluscore.innerHTML = 0;
       tips.classList.remove("hide");
       startTime = null;
-      scoreBoard.classList.remove("show");
+      scorecard.classList.remove("show");
       timer.innerHTML = "00:00:00";
       flagPiece.style.fill = "red";
-      endBoard.classList.remove("show");
+      opend.classList.remove("show");
     }
   
     function addBoost(element) {
@@ -85,26 +85,26 @@
         window.getComputedStyle(element).transform
       ).f;
   
-      const boostElement = document.createElement("div");
-      boostElement.classList.add("boost");
-      boostElement.style.top = `${
-        checkboxWrapper.clientHeight / 2 + verticalMovement - 60
+      const opel = document.createElement("div");
+      opel.classList.add("boost");
+      opel.style.top = `${
+        wrapcheck.clientHeight / 2 + verticalMovement - 60
       }px`;
-      boostElement.style.left = `${element.offsetLeft}px`;
-      boostElement.innerHTML =
+      opel.style.left = `${element.offsetLeft}px`;
+      opel.innerHTML =
         boostWords[Math.floor(Math.random() * boostWords.length)];
-      checkboxWrapper.appendChild(boostElement);
+      wrapcheck.appendChild(opel);
     }
   
     document.body.addEventListener("click", () => {
-      if (currentIndex === 0 || currentIndex === badhabox.length) return;
+      if (myindex === 0 || myindex === badhabox.length) return;
   
-      badhabox[currentIndex].disabled = true;
-      badhabox[currentIndex - 1].checked = false;
-      badhabox[currentIndex - 1].disabled = false;
-      currentIndex--;
-      currentScore.innerText = currentIndex.toString().padStart(3, "0");
-      checkboxWrapper.style.transform = `translateX(${-20 * currentIndex}px)`;
+      badhabox[myindex].disabled = true;
+      badhabox[myindex - 1].checked = false;
+      badhabox[myindex - 1].disabled = false;
+      myindex--;
+      chaluscore.innerText = myindex.toString().padStart(3, "0");
+      wrapcheck.style.transform = `translateX(${-20 * myindex}px)`;
     });
   
     badhabox.forEach((checkbox, index) => {
@@ -113,38 +113,38 @@
           startTimer();
         }
   
-        if (index === currentIndex) {
-          if (currentIndex === 0) {
+        if (index === myindex) {
+          if (myindex === 0) {
             tips.classList.add("hide");
-            scoreBoard.classList.add("show");
+            scorecard.classList.add("show");
           }
   
           event.stopPropagation();
   
           if (Math.random() > 0.6) addBoost(checkbox);
   
-          currentIndex++;
-          currentScore.innerText = currentIndex.toString().padStart(3, "0");
+          myindex++;
+          chaluscore.innerText = myindex.toString().padStart(3, "0");
   
-          if (currentIndex === badhabox.length) {
+          if (myindex === badhabox.length) {
             flagPiece.style.fill = "#00c800";
             cancelAnimationFrame(animationFrame);
-            scoreBoard.classList.remove("show");
+            scorecard.classList.remove("show");
   
             var delta = Date.now() - startTime;
             finalTime.innerHTML = msToTime(delta);
-            endBoard.classList.add("show");
+            opend.classList.add("show");
             return;
           }
   
-          badhabox[currentIndex].disabled = false;
-          checkboxWrapper.style.transform = `translateX(${-20 * currentIndex}px)`;
+          badhabox[myindex].disabled = false;
+          wrapcheck.style.transform = `translateX(${-20 * myindex}px)`;
   
           badhabox[
-            currentIndex
-          ].style.transform = `translateY(${randomPosOrNeg(5 + currentIndex)}px)`;
-        } else if (currentIndex === badhabox.length) {
-          if (currentIndex === badhabox.length) {
+            myindex
+          ].style.transform = `translateY(${randomPosOrNeg(5 + myindex)}px)`;
+        } else if (myindex === badhabox.length) {
+          if (myindex === badhabox.length) {
             event.stopPropagation();
             event.preventDefault();
           }
